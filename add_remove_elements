@@ -1,0 +1,74 @@
+#include <stdio.h>
+
+struct List {
+	int key;
+	struct List *next;
+};
+
+struct List* dodaj_element(struct List *q, int x);
+struct List* usun_element(struct List *q, int x);
+
+void drukuj(struct List *q);
+
+int main(void) {
+	int i, x;
+	struct List *glowa = NULL;
+	for(i=0;i<5;i++) 
+		glowa = dodaj_element(glowa, i);
+	drukuj(glowa); 
+	if(glowa != NULL) {
+		printf("Podaj element do usuniecia. ");
+		scanf("%d", &x);
+		glowa = usun_element(glowa, x);
+		drukuj(glowa);
+	}
+	
+	else 
+		printf ("Lista jest pusta.");
+	getch();
+	return 0;
+}
+
+struct List* dodaj_element(struct List *q, int x) {
+	struct List *pom;
+	pom = (struct List*) malloc (sizeof(struct List));
+	pom->key = x;
+	pom->next = q;
+	q = pom;
+	return q;
+}
+
+void drukuj(struct List *q) {
+	struct List *pom;
+	int i=0;
+	pom = q;
+	if (pom==NULL)
+		printf("\n\nLista jest pusta.\n");
+	else {
+		printf("\n\n Zawartosc listy to: \n");
+		while(pom != NULL) {
+			printf("\n\n Element numer %d = %d\n", ++i, pom->key);
+			pom = pom->next;
+		}
+	}
+}
+
+struct List* usun_element(struct List *q, int x) {
+	struct List *pom, *tmp;
+	pom = q;
+	while (pom != NULL && pom->key != x) {
+		tmp = pom;
+		pom = pom->next;
+	}
+	if(pom != NULL) {
+		if (pom == q)
+			q = pom->next;
+		else
+			tmp->next = pom->next;
+			free(pom);
+	}
+	else
+		printf("Elementu %d nie ma w tej liscie.", x);
+	return q;
+	
+ }
