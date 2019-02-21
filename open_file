@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+
+FILE *fp;
+int main()
+{
+	char filename[10];
+	int inChar;
+	printf("Podaj nazwe pliku, ktory chcesz zobaczyc.\n");
+	gets(filename);
+	if ((fp = fopen(filename, "r+b+")) == NULL)
+		{
+		printf("\nPlik nie istnieje\n");
+		}
+	inChar = getc(fp);
+	while (inChar != EOF)
+	{
+		putchar(inChar);
+		inChar = getc(fp);
+	}
+	fclose(fp);
+	return 0;
+}
